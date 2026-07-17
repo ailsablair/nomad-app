@@ -4,9 +4,25 @@ import { MapPin, Bed, Bath, Dog, ArrowUpRight, Sparkles, AlertCircle } from 'luc
 
 interface ListingCardProps {
   listing: Listing;
+  displayCurrency?: 'CAD' | 'USD';
 }
 
-export const ListingCard: React.FC<ListingCardProps> = ({ listing }) => {
+export const ListingCard: React.FC<ListingCardProps> = ({ listing, displayCurrency = 'CAD' }) => {
+  const [imgError, setImgError] = React.useState(!listing.photoUrl);
+
+  const CONVERSION_RATE = 1.35; // 1 USD = 1.35 CAD
+
+  let displayPrice = listing.price;
+  if (displayCurrency === 'CAD') {
+    if (listing.country === 'US') {
+      displayPrice = Math.round(listing.price * CONVERSION_RATE);
+    }
+  } else { // displayCurrency === 'USD'
+    if (listing.country === 'CA') {
+      displayPrice = Math.round(listing.price / CONVERSION_RATE);
+    }
+  }
+
   // Map internal types to user-friendly titles
   const typeLabels: Record<string, string> = {
     house_boat: 'Houseboat',
@@ -27,13 +43,21 @@ export const ListingCard: React.FC<ListingCardProps> = ({ listing }) => {
   return (
     <div className="group relative flex flex-col overflow-hidden rounded-2xl border border-zinc-200 bg-white transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
       {/* Image Container */}
-      <div className="relative aspect-video w-full overflow-hidden bg-zinc-100">
-        <img
-          src={listing.photoUrl}
-          alt={listing.title}
-          referrerPolicy="no-referrer"
-          className="h-full w-full object-cover object-center transition-transform duration-500 group-hover:scale-105"
-        />
+      <div className="relative aspect-video w-full overflow-hidden bg-zinc-100 flex items-center justify-center">
+        {!imgError ? (
+          <img
+            src={listing.photoUrl}
+            alt={listing.title}
+            referrerPolicy="no-referrer"
+            onError={() => setImgError(true)}
+            className="h-full w-full object-cover object-center transition-transform duration-500 group-hover:scale-105"
+          />
+        ) : (
+          <div className="flex flex-col items-center justify-center gap-1.5 text-zinc-400 p-4 select-none">
+            <span className="text-3xl">📷</span>
+            <span className="text-xs font-bold uppercase tracking-wider text-zinc-400">No Photo Available</span>
+          </div>
+        )}
         
         {/* Accommodation Type Badge */}
         <span className="absolute top-3 left-3 rounded-lg bg-zinc-950/80 px-2.5 py-1 text-xs font-semibold tracking-wide text-white backdrop-blur-sm">
@@ -62,8 +86,8 @@ export const ListingCard: React.FC<ListingCardProps> = ({ listing }) => {
             {listing.title}
           </h3>
           <div className="text-right shrink-0">
-            <span className="font-mono text-lg font-bold text-zinc-950">${listing.price}</span>
-            <span className="text-xs text-zinc-500 font-medium">/mo</span>
+            <span className="font-mono text-lg font-bold text-zinc-950">${displayPrice}</span>
+            <span className="text-xs text-zinc-500 font-medium">/mo {displayCurrency}</span>
           </div>
         </div>
 

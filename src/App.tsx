@@ -22,6 +22,16 @@ const initialFilters: FilterState = {
 export default function App() {
   const [activeTab, setActiveTab] = useState<'curated' | 'ai_search' | 'directories'>('curated');
   const [filters, setFilters] = useState<FilterState>(initialFilters);
+  const [currency, setCurrency] = useState<'CAD' | 'USD'>('CAD');
+
+  const CONVERSION_RATE = 1.35; // 1 USD = 1.35 CAD
+  const getDisplayPrice = (listing: Listing, displayCurrency: 'CAD' | 'USD') => {
+    if (displayCurrency === 'CAD') {
+      return listing.country === 'US' ? Math.round(listing.price * CONVERSION_RATE) : listing.price;
+    } else {
+      return listing.country === 'CA' ? Math.round(listing.price / CONVERSION_RATE) : listing.price;
+    }
+  };
 
   const handleResetFilters = () => {
     setFilters(initialFilters);
@@ -32,8 +42,9 @@ export default function App() {
     // 0. Country Filter (Canada by default)
     if (!filters.includeUS && listing.country !== 'CA') return false;
 
-    // 1. Max price filter
-    if (listing.price > filters.maxPrice) return false;
+    // 1. Max price filter (filtered by displayed price)
+    const displayPrice = getDisplayPrice(listing, currency);
+    if (displayPrice > filters.maxPrice) return false;
 
     // 2. Bedrooms filter
     if (filters.bedrooms !== 'any' && listing.bedrooms < Number(filters.bedrooms)) return false;
@@ -143,6 +154,33 @@ export default function App() {
                     {filteredListings.length} Unconventional Stays Available
                   </p>
                 </div>
+
+                {/* Currency Selector Toggle */}
+                <div className="flex items-center gap-1 bg-zinc-100 p-1 rounded-xl border border-zinc-200 self-start sm:self-center shrink-0 animate-fade-in">
+                  <span className="text-[10px] font-bold text-zinc-400 uppercase tracking-wider px-2 select-none">
+                    Currency
+                  </span>
+                  <button
+                    onClick={() => setCurrency('CAD')}
+                    className={`rounded-lg px-2.5 py-1 text-xs font-bold transition-all ${
+                      currency === 'CAD'
+                        ? 'bg-white text-zinc-950 shadow-sm'
+                        : 'text-zinc-500 hover:text-zinc-900'
+                    }`}
+                  >
+                    🇨🇦 CAD
+                  </button>
+                  <button
+                    onClick={() => setCurrency('USD')}
+                    className={`rounded-lg px-2.5 py-1 text-xs font-bold transition-all ${
+                      currency === 'USD'
+                        ? 'bg-white text-zinc-950 shadow-sm'
+                        : 'text-zinc-500 hover:text-zinc-900'
+                    }`}
+                  >
+                    🇺🇸 USD
+                  </button>
+                </div>
               </div>
 
               {filteredListings.length === 0 ? (
@@ -164,7 +202,7 @@ export default function App() {
               ) : (
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   {filteredListings.map((listing) => (
-                    <ListingCard key={listing.id} listing={listing} />
+                    <ListingCard key={listing.id} listing={listing} displayCurrency={currency} />
                   ))}
                 </div>
               )}
