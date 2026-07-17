@@ -8,7 +8,11 @@ interface GroundingLink {
   url: string;
 }
 
-export const AISearchAssistant: React.FC = () => {
+interface AISearchAssistantProps {
+  displayCurrency?: 'CAD' | 'USD';
+}
+
+export const AISearchAssistant: React.FC<AISearchAssistantProps> = ({ displayCurrency = 'CAD' }) => {
   const [query, setQuery] = useState('');
   const [tool, setTool] = useState<'search' | 'maps'>('search');
   const [loading, setLoading] = useState(false);
@@ -204,7 +208,7 @@ export const AISearchAssistant: React.FC = () => {
                   ) : (
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                       {aiListings.map((listing) => (
-                        <ListingCard key={listing.id} listing={listing} />
+                        <ListingCard key={listing.id} listing={listing} displayCurrency={displayCurrency} />
                       ))}
                     </div>
                   )}

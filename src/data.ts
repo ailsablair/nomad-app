@@ -81,7 +81,7 @@ export const UNCONVENTIONAL_LISTINGS: Listing[] = [
     bathrooms: 1,
     bathroomType: 'outdoor',
     petFriendly: true,
-    photoUrl: 'https://images.unsplash.com/photo-1525113990974-3f45d87244bb?auto=format&fit=crop&w=800&q=80',
+    photoUrl: 'https://images.unsplash.com/photo-1542718610-a1d656d1884c?auto=format&fit=crop&w=800&q=80',
     sourceUrl: 'https://tinyhouselistings.com',
     sourceName: 'Tiny House Listings',
     country: 'CA'

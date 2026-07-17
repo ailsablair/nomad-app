@@ -219,7 +219,7 @@ export default function App() {
                 Connect directly to Google Web Search or Google Maps caches. Query for obscure lookouts, boat docks, or tiny home clusters in real-time.
               </p>
             </div>
-            <AISearchAssistant />
+            <AISearchAssistant displayCurrency={currency} />
           </div>
         )}
 
