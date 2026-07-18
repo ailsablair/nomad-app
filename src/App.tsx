@@ -81,9 +81,6 @@ export default function App() {
           <div className="flex h-20 items-center justify-between gap-4">
             {/* Logo / Brand */}
             <div className="flex items-center gap-3">
-              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-zinc-950 text-white font-mono font-bold text-lg shadow-sm">
-                UR
-              </div>
               <div>
                 <h1 className="font-sans font-bold text-zinc-950 text-base leading-tight">Unconventional Rentals</h1>
                 <p className="text-xs text-zinc-500 font-medium">Obscure, Off-grid & Cost-Efficient Rural Housing</p>
@@ -163,9 +160,6 @@ export default function App() {
                     {isFiltersExpanded ? 'Hide Filters' : 'Show Filters'}
                   </button>
                   <div>
-                    <h2 className="text-sm font-bold text-zinc-500 uppercase tracking-wider">
-                      Seeded Curated Database
-                    </h2>
                     <p className="text-zinc-900 font-bold text-xl mt-1">
                       {filteredListings.length} Unconventional Stays Available
                     </p>
