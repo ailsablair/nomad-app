@@ -24,7 +24,6 @@ jobs:
 
       - name: Build Application
         run: npm run build
-
 - name: Sync Files via SFTP to IONOS
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
