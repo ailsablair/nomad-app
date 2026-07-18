@@ -25,13 +25,15 @@ jobs:
       - name: Build Application
         run: npm run build
 
+
       - name: Sync Files via SFTP to IONOS
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
           server: ${{ secrets.IONOS_SFTP_SERVER }}
           username: ${{ secrets.IONOS_SFTP_USERNAME }}
           password: ${{ secrets.IONOS_SFTP_PASSWORD }}
+          protocol: sftp           # 👈 ADD THIS LINE
           port: 22
-          local-dir: ./dist/          # Uploads only the compiled contents of the dist folder
-          server-dir: /subdomains/apps/nomad/  # Adjust this to match your target folder on IONOS
-          dangerous-clean-slate: false  # Change to true if you want it to delete old files automatically
+          local-dir: ./dist/
+          server-dir: /subdomains/apps/nomad/
+          dangerous-clean-slate: false
