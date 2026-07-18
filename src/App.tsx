@@ -80,11 +80,8 @@ export default function App() {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex h-20 items-center justify-between gap-4">
             {/* Logo / Brand */}
-            <div className="flex items-center gap-3">
-              <div>
-                <h1 className="font-sans font-bold text-zinc-950 text-base leading-tight">Unconventional Rentals</h1>
-                <p className="text-xs text-zinc-500 font-medium">Obscure, Off-grid & Cost-Efficient Rural Housing</p>
-              </div>
+            <div className="flex items-center">
+              <img src={nomadLogo} alt="Nomad Logo" className="h-16 w-auto object-contain" />
             </div>
 
             {/* Navigation Tabs */}
@@ -123,10 +120,6 @@ export default function App() {
                 <span className="hidden sm:inline">Alternative Directories</span>
               </button>
             </nav>
-            {/* Logo */}
-            <div className="h-10 w-24">
-              <img src={nomadLogo} alt="Nomad Logo" className="h-full w-full object-contain" />
-            </div>
           </div>
         </div>
       </header>
@@ -148,7 +141,6 @@ export default function App() {
               </div>
             )}
 
-            {/* Listings Grid */}
             <div className={isFiltersExpanded ? "lg:col-span-3" : "lg:col-span-4"}>
               <div className="mb-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                 <div className="flex items-center gap-4">
@@ -160,7 +152,7 @@ export default function App() {
                     {isFiltersExpanded ? 'Hide Filters' : 'Show Filters'}
                   </button>
                   <div>
-                    <p className="text-zinc-900 font-bold text-xl mt-1">
+                    <p className="text-zinc-900 font-bold text-xl">
                       {filteredListings.length} Unconventional Stays Available
                     </p>
                   </div>
