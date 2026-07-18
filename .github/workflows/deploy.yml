@@ -31,7 +31,7 @@ jobs:
           server: ${{ secrets.IONOS_SFTP_SERVER }}
           username: ${{ secrets.IONOS_SFTP_USERNAME }}
           password: ${{ secrets.IONOS_SFTP_PASSWORD }}
-          protocol: ftps
+          protocol: ftp
           port: 21
           local-dir: ./dist/
           server-dir: /subdomains/apps/nomad/
