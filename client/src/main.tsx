@@ -9,3 +9,11 @@ createRoot(document.getElementById('root')!).render(
     <App />
   </StrictMode>,
 );
+
+export default function App() {
+  return (
+    <SeraProvider defaultTheme="light" storageKey="nomad-theme">
+      <YourAppContent />
+    </SeraProvider>
+  );
+}
