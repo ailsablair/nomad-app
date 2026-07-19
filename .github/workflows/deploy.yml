@@ -38,12 +38,15 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: 22
           script: |
-            cd /subdomains/apps/nomad/
-            # Ensure we are on the latest code
+            # 1. Force the shell to load your profile settings so it can find npm
+            source ~/.bash_profile || source ~/.profile || source ~/.bashrc
+
+            # 2. Navigate to the correct folder relative to your home directory
+            cd ~/subdomains/apps/nomad/
+
+            # 3. Ensure we are on the latest code
             git pull origin main
-            # Install dependencies on the server
+
+            # 4. Install dependencies and build on the server
             npm install
-            # Build on the server
             npm run build
-            # Optional: Restart your application process here if needed
-            # pm2 restart nomad-app || pm2 start npm --name "nomad-app" -- run start
