@@ -1,4 +1,4 @@
-name: Build and Deploy Nomad App
+name: Deploy Application
 
 on:
   push:
@@ -6,47 +6,44 @@ on:
       - main
 
 jobs:
-  # 1. Build locally on GitHub to verify code integrity
-  build-github:
+  deploy:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout Code
+      # Step 1: Download your repository code onto the GitHub runner
+      - name: Checkout repository code
         uses: actions/checkout@v4
 
-      - name: Setup Node.js
+      # Step 2: Install Node.js right inside GitHub Actions
+      - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 20
-          cache: 'npm'
+          node-version: '20' # Matches a stable modern Node version
 
-      - name: Install Dependencies
-        run: npm install
+      # Step 3: Install dependencies and compile your app into the "dist" folder
+      - name: Install dependencies and build app
+        run: |
+          npm install
+          npm run build
 
-      - name: Build Application
-        run: npm run build
-
-  # 2. Trigger the deployment on IONOS via SSH
-  deploy-ssh:
-    needs: build-github
-    runs-on: ubuntu-latest
-    steps:
-      - name: Deploy to IONOS via SSH
+      # Step 4: Log into IONOS quickly just to make sure the target folders exist
+      - name: Ensure remote directories exist
         uses: appleboy/ssh-action@v1.0.3
         with:
-          host: ${{ secrets.IONOS_HOST_IP }}
-          username: ${{ secrets.IONOS_SSH_USERNAME }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.KEY }}
           port: 22
-          script: |
-            # 1. Force the shell to load your profile settings so it can find npm
-            source ~/.bash_profile || source ~/.profile || source ~/.bashrc
+          script: mkdir -p ~/subdomains/apps/nomad/
 
-            # 2. Navigate to the correct folder relative to your home directory
-            cd ~/subdomains/apps/nomad/
-
-            # 3. Ensure we are on the latest code
-            git pull origin main
-
-            # 4. Install dependencies and build on the server
-            npm install
-            npm run build
+      # Step 5: Securely upload the compiled production files using your SSH key
+      - name: Copy production build to IONOS via SSH (SCP)
+        uses: appleboy/scp-action@v1.0.0
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.KEY }}
+          port: 22
+          source: "dist/**" # Change to "build/**" or "out/**" if your framework uses a different output folder name
+          target: "~/subdomains/apps/nomad/"
+          strip_components: 1 # Prevents creating an extra nested "dist" folder on the server
