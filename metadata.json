@@ -1,0 +1,6 @@
+{
+  "name": "Unconventional Rentals",
+  "description": "An MVP aggregator for unconventional short-term rentals featuring cabins, tiny homes, house boats, lighthouses, and remote stays outside major cities.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
