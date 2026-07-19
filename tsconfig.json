@@ -23,4 +23,6 @@
     "allowImportingTsExtensions": true,
     "noEmit": true
   }
+},
+  "include": ["client/src"] 
 }
