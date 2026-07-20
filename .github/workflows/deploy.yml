@@ -1,14 +1,10 @@
-<<<<<<< HEAD
-name: Deploy Application
-=======
-name: Build and Deploy Nomad App
+name: Deploy App
 
 on:
   push:
     branches:
-      - main  # Triggers the workflow every time I push to the main branch
-
-  jobs:
+      - main 
+jobs:
     build-and-deploy:
       runs-on: ubuntu-latest
 
