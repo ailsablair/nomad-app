@@ -305,7 +305,7 @@ Once the server matched the repository exactly, deployments became deterministic
 
 ---
 
-# Product Design
+# User Experience & Product Development
 
 Alongside infrastructure engineering, I designed the user experience around the specific needs of digital nomads.
 
