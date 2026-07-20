@@ -6,8 +6,7 @@ import { ListingCard } from '@/components/ListingCard';
 import { Filters } from '@/components/Filters';
 import { WebsiteList } from '@/components/WebsiteList';
 import { AISearchAssistant } from '@/components/AISearchAssistant';
-import { Sparkles, Globe, Home, SlidersHorizontal } from 'lucide-react';
-import '@fontsource-variable/google-sans-flex/wght.css';   
+import { Sparkles, Globe, Home, SlidersHorizontal } from 'lucide-react'; 
 
 const initialFilters: FilterState = {
   dateAvailable: '',
