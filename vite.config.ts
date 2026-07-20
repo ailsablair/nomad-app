@@ -3,23 +3,19 @@ import react from '@vitejs/plugin-react';
 import path from 'path';
 
 export default defineConfig({
+  root: './client', // Tells Vite to look inside the client folder for index.html
+  base: '/nomad/', 
   plugins: [react()],
-  base: process.env.VITE_DEPLOY_TARGET === 'gh-pages' ? '/nomad/' : './',
-  root: './client',
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './client/src'),
     },
   },
   build: {
-    outDir: '../dist',
+    outDir: '../dist', // Steps out of the client folder to place the build at the repo root
     emptyOutDir: true,
-    rollupOptions: {
-      // This forces the build to ignore missing modules instead of crashing
-      external: [], 
-    }
   },
   server: {
     port: 3000,
-  }
-})
+  },
+});
