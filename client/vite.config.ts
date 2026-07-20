@@ -3,17 +3,17 @@ import react from '@vitejs/plugin-react';
 import path from 'path';
 
 export default defineConfig({
-  root: './client',
-  // Absolute subpath matching both apps.ailsablair.ca/nomad/ and github portfolio subpaths
-  base: '/nomad/', 
+  // Force absolute relative pathing if IONOS builds directly inside this folder
+  base: './', 
   plugins: [react()],
   resolve: {
     alias: {
-      '@': path.resolve(__dirname, './client/src'),
+      '@': path.resolve(__dirname, './src'),
     },
   },
   build: {
-    outDir: '../dist',
+    // If built here, output directly to its own dist, or let IONOS catch it
+    outDir: 'dist',
     emptyOutDir: true,
   },
   server: {
