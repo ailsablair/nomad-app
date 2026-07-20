@@ -367,3 +367,22 @@ Rather than forcing unreliable deployment tooling to fit the hosting environment
 - Vite
 - Cloud Deployment
 - Systems Thinking
+
+---
+
+## Next Steps for Nomad
+
+### Task 1: Optimizing for Freshness Without Sacrificing Speed
+When the client app attempts to scrape or query APIs for hundreds of live listings synchronously every time a user opens the page, the app will suffer from severe latency, browser freezes, and API rate-limit errors. 
+__Solution__: To achieve instant load times paired with fresh listings, I'll implement a Stale-While-Revalidate (SWR) Caching Strategy combined with Lazy Loading.
+
+### Task 2: Proactive Error Proofing for Task 1
+When implementing background fetching and caching, several runtime errors commonly occur in production.
+
+### Task 3: Integrating the High-Value "Weekly+" Sourcing Directory
+To balance quantity (volume of available stays across Canada/North America) with quality (legitimate mid-term stays, transparent pricing, and unconventional architectures like tiny homes and stationary RVs), I'll selectively integrate 5 primary engines from my attached directory of 15 potential data sources for Nomad.
+
+### Task 4: Proactive Error Proofing for Multi-Source Ingestion
+Aggregating disparate APIs and scrapers (matching clean REST JSON from Coliving.com with regex-parsed strings from Kijiji)  inevitably introduces data corruption. To prevent app-breaking runtime errors, implement this __Defensive Normalization__ Schema:
+     1. __Preventing "Undefined Property" Crashes:__ If a scraper fails to extract an image or coordinate, React components will crash if they attempt to read listing.location.lat on an undefined object. Ensure we always pass raw ingested payloads through a strict type-guard adapter before saving them to your state or database.
+     2. __Neutralizing Duplicate Listings Across Platforms:__ Individual hosts frequently cross-post their tiny homes or RVs on both Airbnb, Furnished Finder, and Kijiji. To prevent users from seeing identical properties side-by-side, I'll Implement a deduplication filter in the backend ingestion script based on spatial proximity + title similarity. If two listings exist within 0.005 degrees of latitude/longitude (~500 meters) and share > 70% string similarity in their title, merge them into a single UI card that displays multiple booking platform links (e.g., "Book via Furnished Finder or RVshare").
