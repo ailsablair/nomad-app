@@ -1,43 +1,4 @@
-name: Deploy App
-
-on:
-  push:
-    branches:
-      - main 
-jobs:
-    build-and-deploy:
-      runs-on: ubuntu-latest
-
-      steps: 
-        - name: Checkout Code
-          uses: actions/checkout@v4
-
-        - name: Setup Node.js
-          uses: actions/setup-node@v4
-          with:
-            node-version: 20
-            cache: 'npm'
-
-        - name: Install Dependencies
-          run: npm install
-
-        - name: Build Application
-          run: npm run build
-
-        - name: Sync Files via FTPS to IONOS
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
-        with:
-          server: ${{ secrets.IONOS_SFTP_SERVER }}
-          username: ${{ secrets.IONOS_SFTP_USERNAME }}
-          password: ${{ secrets.IONOS_SFTP_PASSWORD }}
-          protocol: sftp
-          port: 22
-          local-dir: ./dist/
-          server-dir: /subdomains/apps/nomad/
-          dangerous-clean-slate: false
-
-name: Deploy via SSH
->>>>>>> 08675998df7fb5643b137179727760b084d56066
+name: Deploy Nomad App
 
 on:
   push:
@@ -45,44 +6,32 @@ on:
       - main
 
 jobs:
-  deploy:
+  build:
     runs-on: ubuntu-latest
-
     steps:
-      # Step 1: Download your repository code onto the GitHub runner
-      - name: Checkout repository code
-        uses: actions/checkout@v4
-
-      # Step 2: Install Node.js inside GitHub Actions
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
-          node-version: '20'
-
-      # Step 3: Install dependencies and compile your app locally
-      - name: Install dependencies and build app
-        run: |
-          npm install
-          npm run build
-
-      # Step 4: Ensure the target directory structure exists on IONOS
-      - name: Ensure remote directories exist
-        uses: appleboy/ssh-action@v1.0.3
+          node-version: 20
+      - run: npm install
+      - run: npm run build
+      - name: Add .nojekyll
+        run: touch dist/.nojekyll
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
         with:
-          host: ${{ secrets.IONOS_HOST_IP }}
-          username: ${{ secrets.IONOS_SSH_USERNAME }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          port: 22
-          script: mkdir -p ~/subdomains/apps/nomad/
+          path: './dist'
 
-      # Step 5: Securely upload the compiled production files (dist) to IONOS
-      - name: Copy production build to IONOS via SSH (SCP)
-        uses: appleboy/scp-action@v1.0.0
-        with:
-          host: ${{ secrets.IONOS_HOST_IP }}
-          username: ${{ secrets.IONOS_SSH_USERNAME }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          port: 22
-          source: "dist/**"
-          target: "~/subdomains/apps/nomad/"
-          strip_components: 1
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy
+        id: deployment
+        uses: actions/deploy-pages@v4
