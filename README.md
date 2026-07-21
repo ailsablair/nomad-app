@@ -1,4 +1,4 @@
-# Designing a Fault-Tolerant, Multi-Source Aggregation Pipeline with Client-Side SWR Caching.
+# Designing a Fault-Tolerant, Multi-Source Aggregation Pipeline with CI/CD.
 
 > Building a secure deployment pipeline, modern cloud infrastructure, and automated CI/CD for an AI-powered rental platform.
 
