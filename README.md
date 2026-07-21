@@ -1,8 +1,25 @@
 # Architecting & Automating Cloud Infrastructure for the Nomad Platform
-#### Ailsa Blair • hello@ailsablair.com
-<br>
+### Ailsa Blair • hello@ailsablair.com
 
 > Building a secure deployment pipeline, modern cloud infrastructure, and automated CI/CD for an AI-powered rental platform.
+
+
+|   |   |
+| :------------------- | :----------: |
+| __Role:__| Solutions Engineer & Product Designer |
+| __Live App:__ | https://apps.ailsablair.ca/nomad |
+| __Repository:__ | https://github.com/ailsablair/nomad |
+| __Tech Stack:__ | TypeScript
+React
+Vite
+Node.js
+Google Gemini API
+Github Actions
+SSH
+SFTP
+Linux
+IONOS Hosting|
+
 
 **Role:** Solutions Engineer & Product Designer
 
