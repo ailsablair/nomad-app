@@ -1,4 +1,4 @@
-# Architecting & Automating Cloud Infrastructure for the Nomad Platform
+# Designing a Fault-Tolerant, Multi-Source Aggregation Pipeline with Client-Side SWR Caching.
 
 > Building a secure deployment pipeline, modern cloud infrastructure, and automated CI/CD for an AI-powered rental platform.
 
