@@ -9,16 +9,7 @@
 | __Role:__| Solutions Engineer & Product Designer |
 | __Live App:__ | https://apps.ailsablair.ca/nomad |
 | __Repository:__ | https://github.com/ailsablair/nomad |
-| __Tech Stack:__ | TypeScript
-React
-Vite
-Node.js
-Google Gemini API
-Github Actions
-SSH
-SFTP
-Linux
-IONOS Hosting|
+| __Tech Stack:__ | TypeScript, React, Vite, Node.js, Google Gemini API, ChatGPT Workspace, Github Actions, SSH, SFTP, Linux, IONOS Hosting|
 
 
 **Role:** Solutions Engineer & Product Designer
