@@ -4,8 +4,7 @@ import path from 'path';
 
 export default defineConfig({
   root: './client',
-  // Absolute subpath matching both apps.ailsablair.ca/nomad/ and github portfolio subpaths
-  base: '/nomad/', 
+  base: '/nomad/', // Crucial: ensures assets resolve to apps.ailsablair.ca/nomad/assets/
   plugins: [react()],
   resolve: {
     alias: {
